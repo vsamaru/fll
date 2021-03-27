@@ -1,0 +1,23 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - run: yarn install
+    - run: yarn build
+    - name: Publish
+      uses: cloudflare/wrangler-action@1.2.0
+      with:
+        apiToken: "nkyQme3RhFKwapRkYyLJQZbX0kDcrstjtONp9WOX"
+      env:
+        CF_ACCOUNT_ID: "691a3156e374317f2c626559557a6f12"
+        IS_WORKER: true
